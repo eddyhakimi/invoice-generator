@@ -1,5 +1,5 @@
 "use client";
-import * as React from "react";
+import React, { useState } from "react";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -23,6 +23,7 @@ import {
   NoteAdd as NoteAddIcon,
   Settings as SettingsIcon,
 } from "@mui/icons-material";
+import { usePathname } from "next/navigation";
 
 const drawerWidth = 240;
 
@@ -95,13 +96,28 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
+const drawerEntries = [
+  {
+    text: "Start",
+    path: "/",
+    icon: <HomeIcon />,
+  },
+  {
+    text: "Create invoice",
+    path: "/createInvoice",
+    icon: <NoteAddIcon />,
+  },
+  { text: "Settings", path: "/settings", icon: <SettingsIcon />, bottom: true },
+];
+
 interface MiniDrawerProps {
   children: React.ReactNode;
 }
 
 export default function MiniDrawer({ children }: MiniDrawerProps) {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const currentPath = usePathname();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -129,7 +145,8 @@ export default function MiniDrawer({ children }: MiniDrawerProps) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Invoice Generator
+            {drawerEntries.find((entry) => entry.path === currentPath)?.text ??
+              "Invoice Generator"}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -145,79 +162,73 @@ export default function MiniDrawer({ children }: MiniDrawerProps) {
         </DrawerHeader>
         <Divider />
         <List sx={{ flexGrow: 1 }}>
-          {[
-            {
-              text: "Start",
-              path: "/",
-              icon: <HomeIcon />,
-            },
-            {
-              text: "Create invoice",
-              path: "/createInvoice",
-              icon: <NoteAddIcon />,
-            },
-          ].map(({ text, path, icon }) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
-              <Link
-                href={path}
-                style={{ textDecoration: "none", color: "#000000DE" }}
-              >
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
+          {drawerEntries
+            .filter((e) => !e.bottom)
+            .map(({ text, path, icon }) => (
+              <ListItem key={text} disablePadding sx={{ display: "block" }}>
+                <Link
+                  href={path}
+                  style={{ textDecoration: "none", color: "#000000DE" }}
                 >
-                  <ListItemIcon
+                  <ListItemButton
                     sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
                     }}
                   >
-                    {icon}
-                  </ListItemIcon>
-                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
-              </Link>
-            </ListItem>
-          ))}
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {icon}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={text}
+                      sx={{ opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </Link>
+              </ListItem>
+            ))}
         </List>
         <Divider />
         <List>
-          {[
-            { text: "Settings", path: "/settings", icon: <SettingsIcon /> },
-          ].map(({ text, path, icon }) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
-              <Link
-                href={path}
-                style={{ textDecoration: "none", color: "#000000DE" }}
-              >
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
+          {drawerEntries
+            .filter((e) => e.bottom)
+            .map(({ text, path, icon }) => (
+              <ListItem key={text} disablePadding sx={{ display: "block" }}>
+                <Link
+                  href={path}
+                  style={{ textDecoration: "none", color: "#000000DE" }}
                 >
-                  <ListItemIcon
+                  <ListItemButton
                     sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
                     }}
                   >
-                    {icon}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={text}
-                    sx={{ opacity: open ? 1 : 0, textDecoration: "none" }}
-                  />
-                </ListItemButton>
-              </Link>
-            </ListItem>
-          ))}
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {icon}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={text}
+                      sx={{ opacity: open ? 1 : 0, textDecoration: "none" }}
+                    />
+                  </ListItemButton>
+                </Link>
+              </ListItem>
+            ))}
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
