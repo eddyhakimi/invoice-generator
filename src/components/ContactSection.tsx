@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Grid, TextField, Button, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, Grid, TextField, Button, Typography } from "@mui/material";
 import { CompanyContact } from "@/types/CompanyContact";
 
 export default function ContactSection() {
