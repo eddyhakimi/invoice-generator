@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import ThemeRegistry from "./ThemeRegistry";
-import MiniDrawer from "../components/MiniDrawer";
+import MiniDrawer from "@/components/MiniDrawer";
 
 export const metadata: Metadata = {
   title: "Invoice Generator",
