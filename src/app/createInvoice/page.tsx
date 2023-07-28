@@ -1,10 +1,10 @@
 import { Typography } from "@mui/material";
 
-export default function Home() {
+export default function CreateInvoice() {
   return (
     <main>
       <Typography variant="h4" component="h2">
-        Start route
+        Create Invoice route
       </Typography>
     </main>
   );

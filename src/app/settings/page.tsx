@@ -1,10 +1,10 @@
 import { Typography } from "@mui/material";
 
-export default function Home() {
+export default function Settings() {
   return (
     <main>
       <Typography variant="h4" component="h2">
-        Start route
+        Settings route
       </Typography>
     </main>
   );

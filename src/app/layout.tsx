@@ -1,7 +1,7 @@
 import "./globals.css";
-import { Roboto } from "next/font/google";
 import type { Metadata } from "next";
 import ThemeRegistry from "./ThemeRegistry";
+import MiniDrawer from "../components/MiniDrawer";
 
 export const metadata: Metadata = {
   title: "Invoice Generator",
@@ -16,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeRegistry options={{ key: "mui" }}>{children}</ThemeRegistry>
+        <ThemeRegistry options={{ key: "mui" }}>
+          <MiniDrawer>{children}</MiniDrawer>
+        </ThemeRegistry>
       </body>
     </html>
   );
