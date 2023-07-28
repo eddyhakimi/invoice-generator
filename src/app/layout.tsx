@@ -1,11 +1,7 @@
 import "./globals.css";
-import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-
-const roboto = Roboto({
-  weight: ["300", "400", "500", "700"],
-  subsets: ["latin"],
-});
+import type { Metadata } from "next";
+import ThemeRegistry from "./ThemeRegistry";
 
 export const metadata: Metadata = {
   title: "Invoice Generator",
@@ -19,7 +15,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={roboto.className}>{children}</body>
+      <body>
+        <ThemeRegistry options={{ key: "mui" }}>{children}</ThemeRegistry>
+      </body>
     </html>
   );
 }
