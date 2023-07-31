@@ -4,6 +4,7 @@ export type CompanyContact = {
   streetNumber?: string;
   zip?: string;
   city?: string;
+  country?: string;
   phone?: string;
   email?: string;
 };
