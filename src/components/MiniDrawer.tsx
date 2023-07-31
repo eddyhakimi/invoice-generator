@@ -22,6 +22,7 @@ import {
   Menu as MenuIcon,
   NoteAdd as NoteAddIcon,
   Settings as SettingsIcon,
+  Business as BusinessIcon,
 } from "@mui/icons-material";
 import { usePathname } from "next/navigation";
 
@@ -106,6 +107,11 @@ const drawerEntries = [
     text: "Create invoice",
     path: "/createInvoice",
     icon: <NoteAddIcon />,
+  },
+  {
+    text: "Address book",
+    path: "/addressBook",
+    icon: <BusinessIcon />,
   },
   { text: "Settings", path: "/settings", icon: <SettingsIcon />, bottom: true },
 ];
