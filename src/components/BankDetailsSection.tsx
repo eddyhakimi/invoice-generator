@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
-import { Box, Grid, TextField, Button, Typography } from "@mui/material";
+import { Grid, TextField, Button, Typography, Paper } from "@mui/material";
 import { BankDetails } from "@/types/BankDetails";
+import { Save as SaveIcon } from "@mui/icons-material";
 
 export default function ContactSection() {
   const bankDetails: BankDetails = JSON.parse(
@@ -24,7 +25,7 @@ export default function ContactSection() {
   };
 
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", pt: "40px" }}>
+    <Paper sx={{ display: "flex", justifyContent: "center", p: "20px" }}>
       <Grid container spacing={2} minWidth="320px" maxWidth="800px">
         <Grid item xs={12}>
           <Typography variant="h6" component="h3">
@@ -73,10 +74,11 @@ export default function ContactSection() {
           sx={{ display: "flex", justifyContent: "center", mt: "20px" }}
         >
           <Button variant="contained" onClick={onSave}>
+            <SaveIcon sx={{ mr: "8px" }} />
             Save
           </Button>
         </Grid>
       </Grid>
-    </Box>
+    </Paper>
   );
 }

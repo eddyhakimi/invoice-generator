@@ -11,6 +11,7 @@ export default function Settings() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          rowGap: "40px",
         }}
       >
         <ContactSection />

@@ -1,10 +1,12 @@
 "use client";
 import { useState } from "react";
+import { alpha } from "@mui/material/styles";
 import {
   Box,
   Checkbox,
   Fab,
   IconButton,
+  Paper,
   Table,
   TableBody,
   TableCell,
@@ -25,6 +27,8 @@ export default function AddressBook() {
   const [contacts, setContacts] = useState(initialContacts);
   const [selectedContacts, setSelectedContacts] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
+
+  const numSelected = selectedContacts.length;
 
   const handleCreate = (contact: CompanyContact) => {
     if (contacts.map((c) => c.companyName).includes(contact.companyName))
@@ -57,59 +61,66 @@ export default function AddressBook() {
   return (
     <main>
       <Box>
-        <Toolbar>
-          {selectedContacts.length > 0 ? (
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                width: "100%",
-              }}
-            >
-              <Typography>{`${selectedContacts.length} selected`}</Typography>
-              <IconButton onClick={handleDelete}>
-                <DeleteIcon />
-              </IconButton>
-            </Box>
-          ) : (
-            <Typography variant="h6">Common contacts</Typography>
-          )}
-        </Toolbar>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell />
-              <TableCell>Company</TableCell>
-              <TableCell>Street</TableCell>
-              <TableCell>Zip / Postal code</TableCell>
-              <TableCell>City</TableCell>
-              <TableCell>Country</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {contacts.map((contact) => {
-              const selected = isSelected(contact.companyName);
-              return (
-                <TableRow key={contact.companyName} selected={selected}>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selected}
-                      onChange={(e) =>
-                        handleSelection(e.target.checked, contact.companyName)
-                      }
-                    />
-                  </TableCell>
-                  <TableCell>{contact.companyName}</TableCell>
-                  <TableCell>{`${contact.streetName} ${contact.streetNumber}`}</TableCell>
-                  <TableCell>{contact.zip}</TableCell>
-                  <TableCell>{contact.city}</TableCell>
-                  <TableCell>{contact.country}</TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+        <Paper>
+          <Toolbar
+            sx={{
+              ...(numSelected > 0 && {
+                bgcolor: (theme) =>
+                  alpha(
+                    theme.palette.primary.main,
+                    theme.palette.action.activatedOpacity
+                  ),
+              }),
+            }}
+          >
+            {selectedContacts.length > 0 ? (
+              <>
+                <Typography
+                  sx={{ flex: "1" }}
+                >{`${selectedContacts.length} selected`}</Typography>
+                <IconButton onClick={handleDelete}>
+                  <DeleteIcon />
+                </IconButton>
+              </>
+            ) : (
+              <Typography variant="h6">Common contacts</Typography>
+            )}
+          </Toolbar>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell />
+                <TableCell>Company</TableCell>
+                <TableCell>Street</TableCell>
+                <TableCell>Zip / Postal code</TableCell>
+                <TableCell>City</TableCell>
+                <TableCell>Country</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {contacts.map((contact) => {
+                const selected = isSelected(contact.companyName);
+                return (
+                  <TableRow key={contact.companyName} selected={selected}>
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        checked={selected}
+                        onChange={(e) =>
+                          handleSelection(e.target.checked, contact.companyName)
+                        }
+                      />
+                    </TableCell>
+                    <TableCell>{contact.companyName}</TableCell>
+                    <TableCell>{`${contact.streetName} ${contact.streetNumber}`}</TableCell>
+                    <TableCell>{contact.zip}</TableCell>
+                    <TableCell>{contact.city}</TableCell>
+                    <TableCell>{contact.country}</TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </Paper>
         <Fab
           color="primary"
           aria-label="add"
