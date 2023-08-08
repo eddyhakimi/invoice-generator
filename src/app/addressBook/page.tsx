@@ -57,23 +57,26 @@ export default function AddressBook() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {contacts.map((contact) => (
-              <TableRow key={contact.companyName}>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={isSelected(contact.companyName ?? "")}
-                    onChange={(e) =>
-                      handleSelection(e.target.checked, contact.companyName)
-                    }
-                  />
-                </TableCell>
-                <TableCell>{contact.companyName}</TableCell>
-                <TableCell>{`${contact.streetName} ${contact.streetNumber}`}</TableCell>
-                <TableCell>{contact.zip}</TableCell>
-                <TableCell>{contact.city}</TableCell>
-                <TableCell>{contact.country}</TableCell>
-              </TableRow>
-            ))}
+            {contacts.map((contact) => {
+              const selected = isSelected(contact.companyName);
+              return (
+                <TableRow key={contact.companyName} selected={selected}>
+                  <TableCell padding="checkbox">
+                    <Checkbox
+                      checked={selected}
+                      onChange={(e) =>
+                        handleSelection(e.target.checked, contact.companyName)
+                      }
+                    />
+                  </TableCell>
+                  <TableCell>{contact.companyName}</TableCell>
+                  <TableCell>{`${contact.streetName} ${contact.streetNumber}`}</TableCell>
+                  <TableCell>{contact.zip}</TableCell>
+                  <TableCell>{contact.city}</TableCell>
+                  <TableCell>{contact.country}</TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
         <Fab
