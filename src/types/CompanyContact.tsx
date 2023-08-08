@@ -1,5 +1,5 @@
 export type CompanyContact = {
-  companyName?: string;
+  companyName: string;
   streetName?: string;
   streetNumber?: string;
   zip?: string;
