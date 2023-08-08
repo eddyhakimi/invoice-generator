@@ -4,13 +4,16 @@ import {
   Box,
   Checkbox,
   Fab,
+  IconButton,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
+  Toolbar,
+  Typography,
 } from "@mui/material";
-import { Add as AddIcon } from "@mui/icons-material";
+import { Add as AddIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import CreateContactDialog from "@/components/CreateContactDialog";
 import { CompanyContact } from "@/types/CompanyContact";
 
@@ -42,9 +45,37 @@ export default function AddressBook() {
     setSelectedContacts(selectedContacts.filter((name2) => name !== name2));
   };
 
+  const handleDelete = () => {
+    const updatedContacts = contacts.filter(
+      (c) => !selectedContacts.includes(c.companyName)
+    );
+    setContacts(updatedContacts);
+    setSelectedContacts([]);
+    localStorage.setItem("contacts", JSON.stringify(updatedContacts));
+  };
+
   return (
     <main>
       <Box>
+        <Toolbar>
+          {selectedContacts.length > 0 ? (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              <Typography>{`${selectedContacts.length} selected`}</Typography>
+              <IconButton onClick={handleDelete}>
+                <DeleteIcon />
+              </IconButton>
+            </Box>
+          ) : (
+            <Typography variant="h6">Common contacts</Typography>
+          )}
+        </Toolbar>
         <Table>
           <TableHead>
             <TableRow>
