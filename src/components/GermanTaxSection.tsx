@@ -31,7 +31,9 @@ export default function GermanTaxSection() {
     setFinanceOffice(germanTaxDetails.financeOffice ?? "");
   }, []);
 
-  const onSave = () => {
+  const onSave = (e: React.FormEvent) => {
+    e.preventDefault();
+
     const germanTaxDetails: GermanTaxDetails = {
       taxnumber,
       ustId,
@@ -44,63 +46,65 @@ export default function GermanTaxSection() {
 
   return (
     <Paper sx={{ display: "flex", justifyContent: "center", p: "20px" }}>
-      <Grid container spacing={2} minWidth="320px" maxWidth="800px">
-        <Grid item xs={12}>
-          <Typography variant="h6" component="h3">
-            German Tax Details
-          </Typography>
+      <form noValidate autoComplete="off" onSubmit={onSave}>
+        <Grid container spacing={2} minWidth="320px" maxWidth="800px">
+          <Grid item xs={12}>
+            <Typography variant="h6" component="h3">
+              German Tax Details
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              variant="standard"
+              fullWidth={true}
+              label="Taxnumber (Steuernummer)"
+              value={taxnumber}
+              onChange={(e) => setTaxnumber(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              variant="standard"
+              fullWidth={true}
+              label="UstId (Umsatzsteueridentifikationsnummer)"
+              value={ustId}
+              onChange={(e) => setUstId(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              variant="standard"
+              fullWidth={true}
+              label="Finance Office (Finanzamt)"
+              value={financeOffice}
+              onChange={(e) => setFinanceOffice(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={smallBusinessRegulation}
+                  onChange={() =>
+                    setSmallBusinessRegulation(!smallBusinessRegulation)
+                  }
+                />
+              }
+              label="Small Business Regulation (Kleinunternehmerregelung)"
+            />
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            sx={{ display: "flex", justifyContent: "center", mt: "20px" }}
+          >
+            <Button type="submit" variant="contained">
+              <SaveIcon sx={{ mr: "8px" }} />
+              Save
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            variant="standard"
-            fullWidth={true}
-            label="Taxnumber (Steuernummer)"
-            value={taxnumber}
-            onChange={(e) => setTaxnumber(e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            variant="standard"
-            fullWidth={true}
-            label="UstId (Umsatzsteueridentifikationsnummer)"
-            value={ustId}
-            onChange={(e) => setUstId(e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            variant="standard"
-            fullWidth={true}
-            label="Finance Office (Finanzamt)"
-            value={financeOffice}
-            onChange={(e) => setFinanceOffice(e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={smallBusinessRegulation}
-                onChange={() =>
-                  setSmallBusinessRegulation(!smallBusinessRegulation)
-                }
-              />
-            }
-            label="Small Business Regulation (Kleinunternehmerregelung)"
-          />
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          sx={{ display: "flex", justifyContent: "center", mt: "20px" }}
-        >
-          <Button variant="contained" onClick={onSave}>
-            <SaveIcon sx={{ mr: "8px" }} />
-            Save
-          </Button>
-        </Grid>
-      </Grid>
+      </form>
     </Paper>
   );
 }
