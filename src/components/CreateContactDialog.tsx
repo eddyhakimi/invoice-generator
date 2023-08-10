@@ -47,7 +47,6 @@ export default function CreateContactDialog({
     else if (!isUnique) setCompanyNameError("Company name exists already!");
 
     if (companyName && isUnique) {
-      console.log(companyName, isUnique);
       onCreate({
         companyName,
         streetName,
