@@ -1,18 +1,25 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Grid, TextField, Button, Typography, Paper } from "@mui/material";
 import { BankDetails } from "@/types/BankDetails";
 import { Save as SaveIcon } from "@mui/icons-material";
 
 export default function ContactSection() {
-  const bankDetails: BankDetails = JSON.parse(
-    localStorage.getItem("bankDetails") ?? "{}"
-  );
+  const [name, setName] = useState("");
+  const [iban, setIban] = useState("");
+  const [bic, setBic] = useState("");
+  const [accountHolder, setAccountHolder] = useState("");
 
-  const [name, setName] = useState(bankDetails.name);
-  const [iban, setIban] = useState(bankDetails.iban);
-  const [bic, setBic] = useState(bankDetails.bic);
-  const [accountHolder, setAccountHolder] = useState(bankDetails.accountHolder);
+  useEffect(() => {
+    const bankDetails: BankDetails = JSON.parse(
+      localStorage.getItem("bankDetails") ?? "{}"
+    );
+
+    setName(bankDetails.name ?? "");
+    setIban(bankDetails.iban ?? "");
+    setBic(bankDetails.bic ?? "");
+    setAccountHolder(bankDetails.accountHolder ?? "");
+  }, []);
 
   const onSave = () => {
     const bankDetails: BankDetails = {

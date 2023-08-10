@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GermanTaxDetails } from "@/types/GermanTaxDetails";
 import {
   Button,
@@ -13,18 +13,23 @@ import {
 import { Save as SaveIcon } from "@mui/icons-material";
 
 export default function GermanTaxSection() {
-  const germanTaxDetails: GermanTaxDetails = JSON.parse(
-    localStorage.getItem("germanTaxDetails") ?? "{}"
-  );
+  const [taxnumber, setTaxnumber] = useState("");
+  const [ustId, setUstId] = useState("");
+  const [smallBusinessRegulation, setSmallBusinessRegulation] = useState(false);
+  const [financeOffice, setFinanceOffice] = useState("");
 
-  const [taxnumber, setTaxnumber] = useState(germanTaxDetails.taxnumber);
-  const [ustId, setUstId] = useState(germanTaxDetails.ustId);
-  const [smallBusinessRegulation, setSmallBusinessRegulation] = useState(
-    germanTaxDetails.smallBusinessRegulation ?? false
-  );
-  const [financeOffice, setFinanceOffice] = useState(
-    germanTaxDetails.financeOffice
-  );
+  useEffect(() => {
+    const germanTaxDetails: GermanTaxDetails = JSON.parse(
+      localStorage.getItem("germanTaxDetails") ?? "{}"
+    );
+
+    setTaxnumber(germanTaxDetails.taxnumber ?? "");
+    setUstId(germanTaxDetails.ustId ?? "");
+    setSmallBusinessRegulation(
+      germanTaxDetails.smallBusinessRegulation ?? false
+    );
+    setFinanceOffice(germanTaxDetails.financeOffice ?? "");
+  }, []);
 
   const onSave = () => {
     const germanTaxDetails: GermanTaxDetails = {

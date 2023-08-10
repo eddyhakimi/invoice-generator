@@ -1,20 +1,31 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Grid, TextField, Button, Typography, Paper } from "@mui/material";
 import { CompanyContact } from "@/types/CompanyContact";
 import { Save as SaveIcon } from "@mui/icons-material";
 
 export default function ContactSection() {
-  const companyContact: CompanyContact = JSON.parse(
-    localStorage.getItem("companyContact") ?? "{}"
-  );
-  const [companyName, setCompanyName] = useState(companyContact.companyName);
-  const [streetName, setStreetName] = useState(companyContact.streetName);
-  const [streetNumber, setStreetNumber] = useState(companyContact.streetNumber);
-  const [zip, setZip] = useState(companyContact.zip);
-  const [city, setCity] = useState(companyContact.city);
-  const [phone, setPhone] = useState(companyContact.phone);
-  const [email, setEmail] = useState(companyContact.email);
+  const [companyName, setCompanyName] = useState("");
+  const [streetName, setStreetName] = useState("");
+  const [streetNumber, setStreetNumber] = useState("");
+  const [zip, setZip] = useState("");
+  const [city, setCity] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    const companyContact: CompanyContact = JSON.parse(
+      localStorage.getItem("companyContact") ?? "{}"
+    );
+
+    setCompanyName(companyContact.companyName ?? "");
+    setStreetName(companyContact.streetName ?? "");
+    setStreetNumber(companyContact.streetNumber ?? "");
+    setZip(companyContact.zip ?? "");
+    setCity(companyContact.city ?? "");
+    setPhone(companyContact.phone ?? "");
+    setEmail(companyContact.email ?? "");
+  }, []);
 
   const onSave = () => {
     const companyContact: CompanyContact = {

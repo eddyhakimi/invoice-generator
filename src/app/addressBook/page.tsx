@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { alpha } from "@mui/material/styles";
 import {
   Box,
@@ -20,13 +20,17 @@ import CreateContactDialog from "@/components/CreateContactDialog";
 import { CompanyContact } from "@/types/CompanyContact";
 
 export default function AddressBook() {
-  const initialContacts: CompanyContact[] = JSON.parse(
-    localStorage.getItem("contacts") ?? "[]"
-  );
-
-  const [contacts, setContacts] = useState(initialContacts);
+  const [contacts, setContacts] = useState<CompanyContact[]>([]);
   const [selectedContacts, setSelectedContacts] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const initialContacts: CompanyContact[] = JSON.parse(
+      localStorage.getItem("contacts") ?? "[]"
+    );
+
+    setContacts(initialContacts);
+  }, []);
 
   const numSelected = selectedContacts.length;
 
