@@ -35,9 +35,6 @@ export default function AddressBook() {
   const numSelected = selectedContacts.length;
 
   const handleCreate = (contact: CompanyContact) => {
-    if (contacts.map((c) => c.companyName).includes(contact.companyName))
-      //TODO: display error
-      return;
     const updatedContacts = contacts.concat(contact);
     localStorage.setItem("contacts", JSON.stringify(updatedContacts));
 
