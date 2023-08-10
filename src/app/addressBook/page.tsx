@@ -99,6 +99,13 @@ export default function AddressBook() {
               </TableRow>
             </TableHead>
             <TableBody>
+              {contacts.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={6} sx={{ textAlign: "center" }}>
+                    No contacts
+                  </TableCell>
+                </TableRow>
+              )}
               {contacts.map((contact) => {
                 const selected = isSelected(contact.companyName);
                 return (
